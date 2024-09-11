@@ -95,6 +95,8 @@ public class TFT {
         if (activeTraits > maxActiveTraits) {
             solution = pointers.clone();
         }
+        if(maxActiveTraits<=0)
+            return new int [0];
         return solution;
     }
 
@@ -264,7 +266,7 @@ public class TFT {
         String [] warwick = {"Vanguard","Frost"};
         Unit Warwick = new Unit(warwick,"Warwick");
 
-        String [] wukong = {"Druid"};
+        String [] wukong = {};
         Unit Wukong = new Unit(wukong,"Wukong");
 
         String [] xerath = {"Arcana"};
@@ -285,7 +287,6 @@ public class TFT {
         hm.put("Arcana",2);
         hm.put("Chrono",2);
         hm.put("Dragon",2);
-        hm.put("Druid",1);
         hm.put("Eldritch",3);
         hm.put("Faerie",2);
         hm.put("Frost",3);
@@ -307,16 +308,21 @@ public class TFT {
         hm.put("Warrior",2);
 
         TFT tft = new TFT(units,hm);
-        int [] solution= tft.maxStandUnited(41);
+        int [] solution= tft.maxStandUnited(10);
 
-        for(int i: solution){
-            System.out.print(units[i]+" ");
+        if(solution.length==0)
+            System.out.println("No non-unique trait can be activated using that many units!");
+        else {
+            for (int i : solution) {
+                System.out.print(units[i] + " ");
+            }
         }
     }
 }
 class Unit{
     String [] traits;
     String name;
+   
     public Unit(String [] traits, String name){
         this.traits= traits;
         this.name= name;
