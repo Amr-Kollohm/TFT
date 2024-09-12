@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,10 +10,10 @@ public class TFT {
         this.units = units;
     }
 
-    public int [] maxStandUnited(int n){
+    public ArrayList<int []> maxStandUnited(int n){
+        ArrayList<int[]> solutions= new ArrayList<>();
         int [] pointers = new int[n];
-        int [] solution = new int[n];
-        int maxActiveTraits=-1;
+        int maxActiveTraits=0;
 
         for(int i=0;i<n;i++){
             pointers[i]=i;
@@ -20,7 +21,6 @@ public class TFT {
 
         int counter=0;
         while(true) {
-            counter=1;
             // Initialize trait count keeper with zeros
             HashMap<String, Integer> hm = new HashMap<String, Integer>();
             for(String str: activate.keySet()){
@@ -46,14 +46,22 @@ public class TFT {
                     if(hm.get(str)==activate.get(str)-1)
                         result++;
                 }
+                if (result == maxActiveTraits) {
+                    int [] solution =pointers.clone();
+                    solution[n-1]=i;
+                    solutions.add(solution);
+                }
                 if (result > maxActiveTraits) {
                     maxActiveTraits = result;
-                    solution = pointers.clone();
+                    solutions.clear();
+                    int [] solution =pointers.clone();
                     solution[n-1]=i;
+                    solutions.add(solution);
                 }
             }
 
             // Mechanism for controlling pointers
+            counter=1;
             for(int i=n-2;i>=0;i--){
                 if(pointers[i]==units.length-counter-1){
                     counter++;
@@ -86,16 +94,19 @@ public class TFT {
             if (hm.get(trait) >= activate.get(trait))
                 activeTraits++;
         }
-        
+
         if (activeTraits > maxActiveTraits) {
-            solution = pointers.clone();
+            solutions.clear();
+            solutions.add(pointers.clone());
+        }
+        if (activeTraits == maxActiveTraits) {
+            solutions.add(pointers.clone());
         }
 
-        
         // Return the results
-        if(maxActiveTraits<=0)
-            return new int [0];
-        return solution;
+        if(maxActiveTraits==0)
+            return new ArrayList<int[]>();
+        return solutions;
     }
 
     public static void main(String [] args){
@@ -303,16 +314,20 @@ public class TFT {
         hm.put("Warrior",2);
 
         TFT tft = new TFT(units,hm);
-        int [] solution= tft.maxStandUnited(4);
+        ArrayList<int []> solutions= tft.maxStandUnited(6);
 
-        if(solution.length==0)
+        if(solutions.isEmpty())
             System.out.println("No non-unique trait can be activated using that many units!");
         else {
-            for (int i : solution) {
-                System.out.print(units[i] + " ");
+            for (int [] solution : solutions) {
+                for(int i: solution){
+                    System.out.print(units[i] + " ");
+                }
+                System.out.println();
             }
         }
     }
+
 }
 class Unit{
     String [] traits;
@@ -327,3 +342,4 @@ class Unit{
         return this.name;
     }
 }
+
