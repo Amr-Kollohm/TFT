@@ -24,5 +24,19 @@ Here are some of the results:
 + ***n=7***: ***Ahri Bard Fiora Gwen Hecarim Morgana Poppy***
 + ***n=8***: ***Ahri Akali Bard Camille Gwen Hecarim Shen Zilean***
 + ***n=9***: ***Bard Ezreal Fiora Galio Gwen Morgana Rumble Ryze Zoe***
-+ ***n=10***: ******
++ ***n=10***: ***Ahri Akali Ezreal Fiora Hecarim Kassadin Poppy Ryze Varus Zoe*** (9 Zoe/Ryze are +1)
+
+| n     | Units                                                        | #Active traits     | Comments|
+|-------|--------------------------------------------------------------|--------------|--------------|
+| 1     |-                                                             | 0            | No non-unique trait can be activated with 1 unit (this set at least)|
+| 2     | Ahri Bard                                                    | 1            | Row 1, Cell 3|
+| 3     | Bard Milio Rakan                                             | 3            | Row 1, Cell 3|
+| 4     | Ahri Bard Morgana Zoe                                        | 3            | Row 1, Cell 3|
+| 5     | Bard Fiora Gwen Morgana Zoe                                  | 5            | Row 1, Cell 3|
+| 6     | Ahri Bard Fiora Gwen Morgana Zoe                             | 5            | Row 1, Cell 3|
+| 7     | Ahri Bard Fiora Gwen Hecarim Morgana Poppy                   | 7            | Row 1, Cell 3|
+| 8     | Ahri Akali Bard Camille Gwen Hecarim Shen Zilean             | 9            | Row 1, Cell 3|
+| 9     | Bard Ezreal Fiora Galio Gwen Morgana Rumble Ryze Zoe         | Row 3, Cell 3| Row 1, Cell 3|
+| 10    | Ahri Akali Ezreal Fiora Hecarim Kassadin Poppy Ryze Varus Zoe| Row 3, Cell 3| Row 1, Cell 3|
+
 
