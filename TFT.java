@@ -21,45 +21,39 @@ public class TFT {
         int counter=0;
         while(true) {
             counter=1;
-
+            // Initialize trait count keeper with zeros
             HashMap<String, Integer> hm = new HashMap<String, Integer>();
             for(String str: activate.keySet()){
                 hm.put(str,0);
             }
-
-            for (int j = 0; j < n-1; j++) {
+            // Count total traits for the n-1 units
+            for (int j=0;j<n-1;j++) {
                 for(String str : units[pointers[j]].traits){
                     hm.put(str,hm.get(str)+1);
                 }
             }
+            // Count the #no active traits from n-1 units
             int activeTraits = 0;
             for (String trait : hm.keySet()) {
                 if (hm.get(trait) >= activate.get(trait))
                     activeTraits++;
             }
 
-            for (int i = pointers[n - 1]; i < units.length; i++) {
-                for(String str : units[i].traits){
-                    hm.put(str,hm.get(str)+1);
-                }
-
-                int result =0;
+            // Recalculate #no active traits moving pointer of the nth unit
+            for (int i=pointers[n-1];i<units.length;i++) {
+                int result =activeTraits;
                 for(String str :units[i].traits){
-                    if(hm.get(str)>= activate.get(str))
+                    if(hm.get(str)==activate.get(str)-1)
                         result++;
                 }
-                activeTraits+=result;
-                if (activeTraits > maxActiveTraits) {
-                    maxActiveTraits = activeTraits;
+                if (result > maxActiveTraits) {
+                    maxActiveTraits = result;
                     solution = pointers.clone();
                     solution[n-1]=i;
                 }
-                activeTraits-=result;
-                for(String str : units[i].traits){
-                    hm.put(str,hm.get(str)-1);
-                }
             }
 
+            // Mechanism for controlling pointers
             for(int i=n-2;i>=0;i--){
                 if(pointers[i]==units.length-counter-1){
                     counter++;
@@ -76,13 +70,14 @@ public class TFT {
             }
         }
 
+        // Calculate #no active traits for the very last combination of units
         Map<String, Integer> hm = new HashMap<String, Integer>();
         for(String str: activate.keySet()){
             hm.put(str,0);
         }
         for(int j=units.length-1-n;j<n;j++){
-            for (int k = 0; k < units[pointers[j]].traits.length; k++) {
-                hm.put(units[pointers[j]].traits[k], hm.get(units[pointers[j]].traits[k]) + 1);
+            for(String str : units[pointers[j]].traits){
+                hm.put(str,hm.get(str)+1);
             }
         }
 
@@ -91,10 +86,13 @@ public class TFT {
             if (hm.get(trait) >= activate.get(trait))
                 activeTraits++;
         }
-
+        
         if (activeTraits > maxActiveTraits) {
             solution = pointers.clone();
         }
+
+        
+        // Return the results
         if(maxActiveTraits<=0)
             return new int [0];
         return solution;
@@ -266,9 +264,6 @@ public class TFT {
         String [] warwick = {"Vanguard","Frost"};
         Unit Warwick = new Unit(warwick,"Warwick");
 
-        String [] wukong = {};
-        Unit Wukong = new Unit(wukong,"Wukong");
-
         String [] xerath = {"Arcana"};
         Unit Xerath = new Unit(xerath,"Xerath");
 
@@ -281,7 +276,7 @@ public class TFT {
         String [] zoe = {"Witchcraft","Scholar","Portal"};
         Unit Zoe = new Unit(zoe,"Zoe");
 
-        Unit [] units = {Ahri,Akali,Ashe,Bard,Blitzcrank,Briar,Camille,Cassiopeia,Diana,Elise,Ezreal,Fiora,Galio,Gwen,Hecarim,Hwei,Jax,Jayce,Jinx,Kalista,Karma,Kassadin,Katarina,KogMaw,Lilia,Milio,Mordekaiser,Morgana,Nami,Nasus,Neeko,Nilah,Nomsy,Norra,Nunu,Olaf,Poppy,Rakan,Rumble,Ryze,Seraphine,Shen,Shyvana,Smolder,Soraka,Swain,Syndra,Kench,Taric,Tristana,Twitch,Varus,Veigar,Vex,Warwick,Wukong,Xerath,Ziggs,Zilean,Zoe};
+        Unit [] units = {Ahri,Akali,Ashe,Bard,Blitzcrank,Briar,Camille,Cassiopeia,Diana,Elise,Ezreal,Fiora,Galio,Gwen,Hecarim,Hwei,Jax,Jayce,Jinx,Kalista,Karma,Kassadin,Katarina,KogMaw,Lilia,Milio,Mordekaiser,Morgana,Nami,Nasus,Neeko,Nilah,Nomsy,Norra,Nunu,Olaf,Poppy,Rakan,Rumble,Ryze,Seraphine,Shen,Shyvana,Smolder,Soraka,Swain,Syndra,Kench,Taric,Tristana,Twitch,Varus,Veigar,Vex,Warwick,Xerath,Ziggs,Zilean,Zoe};
 
         HashMap<String,Integer> hm = new HashMap<>();
         hm.put("Arcana",2);
@@ -308,7 +303,7 @@ public class TFT {
         hm.put("Warrior",2);
 
         TFT tft = new TFT(units,hm);
-        int [] solution= tft.maxStandUnited(10);
+        int [] solution= tft.maxStandUnited(4);
 
         if(solution.length==0)
             System.out.println("No non-unique trait can be activated using that many units!");
@@ -322,7 +317,7 @@ public class TFT {
 class Unit{
     String [] traits;
     String name;
-   
+
     public Unit(String [] traits, String name){
         this.traits= traits;
         this.name= name;
@@ -332,4 +327,3 @@ class Unit{
         return this.name;
     }
 }
-
