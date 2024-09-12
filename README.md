@@ -1,7 +1,7 @@
 # TFT
 This repository is made to optimize the active trait count in Team Fight Tactics (TFT). While it was created with set 12 in mind, it should generally work for any TFT set.
 ## Motivation
-So why would you want to **maximize** active trait count? Other than the obvious fact that traits buff and make your team **stronger**, the main inspiration for this project was the augment **Stand United II** and this bad boy:
+So why would you want to **maximize** active trait count? Other than the obvious fact that active traits buff and make your team **stronger**, the main inspiration for this project was the augment **Stand United II** and this bad boy:
 
 ![TahmKench](https://github.com/user-attachments/assets/5d00be48-b036-48aa-927e-a205c973d88d)
 
@@ -36,7 +36,7 @@ Here are some of the results:
 | 6     | Ahri Bard Fiora Gwen Morgana Zoe                             | 5            | Row 1, Cell 3|
 | 7     | Ahri Bard Fiora Gwen Hecarim Morgana Poppy                   | 7            | Row 1, Cell 3|
 | 8     | Ahri Akali Bard Camille Gwen Hecarim Shen Zilean             | 9            | Row 1, Cell 3|
-| 9     | Bard Ezreal Fiora Galio Gwen Morgana Rumble Ryze Zoe         | Row 3, Cell 3| Row 1, Cell 3|
+| 9     | Bard Ezreal Fiora Galio Gwen Morgana Rumble Ryze Zoe         |  | Row 1, Cell 3|
 | 10    | Ahri Akali Ezreal Fiora Hecarim Kassadin Poppy Ryze Varus Zoe| Row 3, Cell 3| Row 1, Cell 3|
 
 
