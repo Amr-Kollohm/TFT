@@ -1,11 +1,9 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TFT {
     Unit [] units;
-    Map<String,Integer> activate;
-    public TFT(Unit [] units, HashMap<String, Integer> activate){
+    int [] activate;
+    public TFT(Unit [] units, int [] activate){
         this.activate = activate;
         this.units = units;
     }
@@ -22,28 +20,26 @@ public class TFT {
         int counter=0;
         while(true) {
             // Initialize trait count keeper with zeros
-            HashMap<String, Integer> hm = new HashMap<String, Integer>();
-            for(String str: activate.keySet()){
-                hm.put(str,0);
-            }
+            int [] ar = new int[activate.length];
+
             // Count total traits for the n-1 units
             for (int j=0;j<n-1;j++) {
-                for(String str : units[pointers[j]].traits){
-                    hm.put(str,hm.get(str)+1);
+                for(int i : units[pointers[j]].traits){
+                    ar[i]++;
                 }
             }
             // Count the #no active traits from n-1 units
             int activeTraits = 0;
-            for (String trait : hm.keySet()) {
-                if (hm.get(trait) >= activate.get(trait))
+            for(int i=0;i<ar.length;i++){
+                if (ar[i] >= activate[i])
                     activeTraits++;
             }
 
             // Recalculate #no active traits moving pointer of the nth unit
             for (int i=pointers[n-1];i<units.length;i++) {
                 int result =activeTraits;
-                for(String str :units[i].traits){
-                    if(hm.get(str)==activate.get(str)-1)
+                for(int j :units[i].traits){
+                    if(ar[j] == activate[j]-1)
                         result++;
                 }
                 if (result == maxActiveTraits) {
@@ -79,21 +75,19 @@ public class TFT {
         }
 
         // Calculate #no active traits for the very last combination of units
-        Map<String, Integer> hm = new HashMap<String, Integer>();
-        for(String str: activate.keySet()){
-            hm.put(str,0);
-        }
-        for(int j=units.length-1-n;j<n;j++){
-            for(String str : units[pointers[j]].traits){
-                hm.put(str,hm.get(str)+1);
+        int [] ar = new int[activate.length];
+        for (int j=0;j<n;j++) {
+            for(int i : units[pointers[j]].traits){
+                ar[i]++;
             }
         }
 
         int activeTraits = 0;
-        for (String trait : hm.keySet()) {
-            if (hm.get(trait) >= activate.get(trait))
+        for(int i=0;i<ar.length;i++){
+            if (ar[i] >= activate[i])
                 activeTraits++;
         }
+
 
         if (activeTraits > maxActiveTraits) {
             solutions.clear();
@@ -110,210 +104,187 @@ public class TFT {
     }
 
     public static void main(String [] args){
-        String [] ahri = {"Scholar","Arcana"};
+        int [] ahri = {18,0};
         Unit Ahri = new Unit(ahri,"Ahri");
 
-        String [] akali = {"Pyro","Warrior","Multistriker"};
+        int [] akali = {8,21,16};
         Unit Akali = new Unit(akali,"Akali");
 
-        String [] ashe  = {"Eldritch","Multistriker"};
+        int [] ashe  = {3,16};
         Unit Ashe = new Unit(ashe,"Ashe");
 
-        String [] bard = {"Scholar","Sugarcraft","Preserver"};
+        int [] bard = {18,9,17};
         Unit Bard = new Unit(bard,"Bard");
 
-        String [] blitzcrank = {"Honeymancy","Vanguard"};
+        int [] blitzcrank = {6,20};
         Unit Blitzcrank = new Unit(blitzcrank,"Blitz");
 
-        String [] briar = {"Eldritch","Shapeshifter"};
+        int [] briar = {3,19};
         Unit Briar = new Unit(briar,"Briar");
 
-        String [] camille = {"Chrono","Multistriker"};
+        int [] camille = {1,16};
         Unit Camille = new Unit(camille,"Camille");
 
-        String [] cassiopeia = {"Witchcraft","Incantor"};
+        int [] cassiopeia = {10,14};
         Unit Cassiopeia = new Unit(cassiopeia,"Cassiopeia");
 
-        String [] diana = {"Frost","Bastion"};
+        int [] diana = {5,11};
         Unit Diana = new Unit(diana,"Diana");
 
-        String [] elise = {"Eldritch","Shapeshifter"};
+        int [] elise = {3,19};
         Unit Elise = new Unit(elise,"Elise");
 
-        String [] ezreal = {"Blaster","Portal"};
+        int [] ezreal = {12,7};
         Unit Ezreal = new Unit(ezreal,"Ezreal");
 
-        String [] fiora = {"Warrior","Witchcraft"};
+        int [] fiora = {21,10};
         Unit Fiora = new Unit(fiora,"Fiora");
 
-        String [] galio = {"Mage","Vanguard","Portal"};
+        int [] galio = {15,20,7};
         Unit Galio = new Unit(galio,"Galio");
 
-        String [] gwen = {"Warrior","Sugarcraft"};
+        int [] gwen = {21,9};
         Unit Gwen = new Unit(gwen,"Gwen");
 
-        String [] hecarim = {"Bastion", "Arcana", "Multistriker"};
+        int [] hecarim = {11, 0, 16};
         Unit Hecarim = new Unit(hecarim,"Hecarim");
 
-        String [] hwei = {"Blaster","Frost"};
+        int [] hwei = {12,5};
         Unit Hwei = new Unit(hwei,"Hwei");
 
-        String [] jax = {"Chrono","Multistriker"};
+        int [] jax = {1,16};
         Unit Jax = new Unit(jax,"Jax");
 
-        String [] jayce = {"Portal","Shapeshifter"};
+        int [] jayce = {7,19};
         Unit Jayce = new Unit(jayce,"Jayce");
 
-        String [] jinx = {"Sugarcraft","Hunter"};
+        int [] jinx = {9,13};
         Unit Jinx = new Unit(jinx,"Jinx");
 
-        String [] kalista = {"Multistriker","Faerie"};
+        int [] kalista = {16,4};
         Unit Kalista = new Unit(kalista,"Kalista");
 
-        String [] karma = {"Chrono","Incantor"};
+        int [] karma = {1,14};
         Unit Karma = new Unit(karma,"Karma");
 
-        String [] kassadin = {"Portal","Multistriker"};
+        int [] kassadin = {7,16};
         Unit Kassadin = new Unit(kassadin,"Kassadin");
 
-        String [] katarina = {"Faerie","Warrior"};
+        int [] katarina = {4,21};
         Unit Katarina = new Unit(katarina,"Katarina");
 
-        String [] kogmaw = {"Hunter","Honeymancy"};
+        int [] kogmaw = {13,6};
         Unit KogMaw = new Unit(kogmaw,"KogMaw");
 
-        String [] lilia = {"Faerie","Bastion"};
+        int [] lilia = {4,11};
         Unit Lilia = new Unit(lilia,"Lilia");
 
-        String [] milio = {"Faerie","Scholar"};
+        int [] milio = {4,18};
         Unit Milio = new Unit(milio,"Milio");
 
-        String [] mordekaiser = {"Vanguard","Eldritch"};
+        int [] mordekaiser = {20,3};
         Unit Mordekaiser = new Unit(mordekaiser,"Mordekaiser");
 
-        String [] morgana = {"Witchcraft","Preserver"};
+        int [] morgana = {10,17};
         Unit Morgana = new Unit(morgana,"Morgana");
 
-        String [] nami = {"Eldritch","Mage"};
+        int [] nami = {3,15};
         Unit Nami = new Unit(nami,"Nami");
 
-        String [] nasus = {"Pyro","Shapeshifter"};
+        int [] nasus = {8,19};
         Unit Nasus = new Unit(nasus,"Nasus");
 
-        String [] neeko = {"Witchcraft","Shapeshifter"};
+        int [] neeko = {10,19};
         Unit Neeko = new Unit(neeko,"Neeko");
 
-        String [] nilah = {"Eldritch","Warrior"};
+        int [] nilah = {3,21};
         Unit Nilah = new Unit(nilah,"Nilah");
 
-        String [] nomsy = {"Hunter","Dragon"};
+        int [] nomsy = {13,2};
         Unit Nomsy = new Unit(nomsy,"Nomsy");
 
-        String [] norra = {"Mage","Portal"};
+        int [] norra = {15,7};
         Unit Norra = new Unit(norra,"Nora & Yuumi");
 
-        String [] nunu = {"Honeymancy","Bastion"};
+        int [] nunu = {6,11};
         Unit Nunu = new Unit(nunu,"Nunu");
 
-        String [] olaf = {"Hunter","Frost"};
+        int [] olaf = {13,5};
         Unit Olaf = new Unit(olaf,"Olaf");
 
-        String [] poppy = {"Bastion","Witchcraft"};
+        int [] poppy = {11,10};
         Unit Poppy = new Unit(poppy,"Poppy");
 
-        String [] rakan = {"Faerie","Preserver"};
+        int [] rakan = {4,17};
         Unit Rakan = new Unit(rakan,"Rakan");
 
-        String [] rumble = {"Blaster","Vanguard"};
+        int [] rumble = {12,20};
         Unit Rumble = new Unit(rumble,"Rumble");
 
-        String [] ryze = {"Scholar","Portal"};
+        int [] ryze = {18,7};
         Unit Ryze = new Unit(ryze,"Ryze");
 
-        String [] seraphine = {"Mage","Faerie"};
+        int [] seraphine = {15,4};
         Unit Seraphine = new Unit(seraphine,"Seraphine");
 
-        String [] shen = {"Pyro","Bastion"};
+        int [] shen = {8,11};
         Unit Shen = new Unit(shen,"Shen");
 
-        String [] shyvana = {"Dragon","Shapeshifter"};
+        int [] shyvana = {2,19};
         Unit Shyvana = new Unit(shyvana,"Shyvana");
 
-        String [] smolder = {"Dragon","Blaster"};
+        int [] smolder = {2,12};
         Unit Smolder = new Unit(smolder,"Smolder");
 
-        String [] soraka = {"Mage","Sugarcraft"};
+        int [] soraka = {15,9};
         Unit Soraka = new Unit(soraka,"Soraka");
 
-        String [] swain = {"Frost","Shapeshifter"};
+        int [] swain = {5,19};
         Unit Swain = new Unit(swain,"Swain");
 
-        String [] syndra = {"Eldritch","Incantor"};
+        int [] syndra = {3,14};
         Unit Syndra = new Unit(syndra,"Syndra");
 
-        String [] Thomas = {"Arcana","Vanguard"};
+        int [] Thomas = {0,20};
         Unit Kench = new Unit(Thomas,"Tahm Kench");
 
-        String [] taric = {"Bastion","Portal"};
+        int [] taric = {11,7};
         Unit Taric = new Unit(taric,"Taric");
 
-        String [] tristana = {"Faerie","Blaster"};
+        int [] tristana = {4,12};
         Unit Tristana = new Unit(tristana,"Tristana");
 
-        String [] twitch = {"Frost","Hunter"};
+        int [] twitch = {5,13};
         Unit Twitch = new Unit(twitch,"Twitch");
 
-        String [] varus = {"Pyro","Blaster"};
+        int [] varus = {8,12};
         Unit Varus = new Unit(varus,"Varus");
 
-        String [] veigar = {"Mage","Honeymancy"};
+        int [] veigar = {15,6};
         Unit Veigar = new Unit(veigar,"Veigar");
 
-        String [] vex = {"Mage","Chrono"};
+        int [] vex = {15,1};
         Unit Vex = new Unit(vex,"Vex");
 
-        String [] warwick = {"Vanguard","Frost"};
+        int [] warwick = {20,5};
         Unit Warwick = new Unit(warwick,"Warwick");
 
-        String [] xerath = {"Arcana"};
+        int [] xerath = {0};
         Unit Xerath = new Unit(xerath,"Xerath");
 
-        String [] ziggs = {"Incantor", "Honeymancy"};
+        int [] ziggs = {14, 6};
         Unit Ziggs = new Unit(ziggs,"Ziggs");
 
-        String [] zilean = {"Preserver","Chrono","Frost"};
+        int [] zilean = {17,1,5};
         Unit Zilean = new Unit(zilean,"Zilean");
 
-        String [] zoe = {"Witchcraft","Scholar","Portal"};
+        int [] zoe = {10,18,7};
         Unit Zoe = new Unit(zoe,"Zoe");
 
         Unit [] units = {Ahri,Akali,Ashe,Bard,Blitzcrank,Briar,Camille,Cassiopeia,Diana,Elise,Ezreal,Fiora,Galio,Gwen,Hecarim,Hwei,Jax,Jayce,Jinx,Kalista,Karma,Kassadin,Katarina,KogMaw,Lilia,Milio,Mordekaiser,Morgana,Nami,Nasus,Neeko,Nilah,Nomsy,Norra,Nunu,Olaf,Poppy,Rakan,Rumble,Ryze,Seraphine,Shen,Shyvana,Smolder,Soraka,Swain,Syndra,Kench,Taric,Tristana,Twitch,Varus,Veigar,Vex,Warwick,Xerath,Ziggs,Zilean,Zoe};
-
-        HashMap<String,Integer> hm = new HashMap<>();
-        hm.put("Arcana",2);
-        hm.put("Chrono",2);
-        hm.put("Dragon",2);
-        hm.put("Eldritch",3);
-        hm.put("Faerie",2);
-        hm.put("Frost",3);
-        hm.put("Honeymancy",3);
-        hm.put("Portal",3);
-        hm.put("Pyro",2);
-        hm.put("Sugarcraft",2);
-        hm.put("Witchcraft",2);
-        hm.put("Bastion",2);
-        hm.put("Blaster",2);
-        hm.put("Hunter",2);
-        hm.put("Incantor",2);
-        hm.put("Mage",3);
-        hm.put("Multistriker",3);
-        hm.put("Preserver",2);
-        hm.put("Scholar",2);
-        hm.put("Shapeshifter",2);
-        hm.put("Vanguard",2);
-        hm.put("Warrior",2);
-
-        TFT tft = new TFT(units,hm);
+        // Arcana Chrono Dragon Eldritch Faerie Frost Honeymancy Portal Pyro Sugarcraft Witchcraft Bastion Blaster Hunter Incantor Mage Multistriker Preserver Scholar Shapeshifter Vanguard Warrior
+        int [] traits = {2,2,2,3,2,3,3,3,2,2,2,2,2,2,2,3,3,2,2,2,2,2};
+        TFT tft = new TFT(units,traits);
         ArrayList<int []> solutions= tft.maxStandUnited(6);
 
         if(solutions.isEmpty())
@@ -330,10 +301,10 @@ public class TFT {
 
 }
 class Unit{
-    String [] traits;
+    int [] traits;
     String name;
 
-    public Unit(String [] traits, String name){
+    public Unit(int [] traits, String name){
         this.traits= traits;
         this.name= name;
     }
@@ -342,4 +313,3 @@ class Unit{
         return this.name;
     }
 }
-
