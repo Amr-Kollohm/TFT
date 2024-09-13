@@ -16,10 +16,10 @@ The Arcana trait (*If applied to Tahm Kench*) will give a **team wide** HP buff 
 Given a team size ***n*** the code will output the names of *ALL* combinations of ***n*** units that will maximize the active trait count.
 
 
-## How is it done?
+## How does it work?
 The codes iterates through **EVERY** possible combination of ***n*** units, calculates the number of active traits for each specific combination, compares combinations with each other and saves the combinations that maximize the number of active traits. This is **Brute Forcing** which **will work** but is not very *efficient* or *fast*.
 
-# Technical Stuff
+## Technical Stuff
 The current version of the code runs in **O(kCn)** where k is the total number of units and n is the number   
 
 ## Results
