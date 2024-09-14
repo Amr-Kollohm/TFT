@@ -1,11 +1,14 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class TFT {
     Unit [] units;
     int [] activate;
-    public TFT(Unit [] units, int [] activate){
+    HashSet<Integer> [] hs;
+    public TFT(Unit [] units, int [] activate, HashSet<Integer> [] hs){
         this.activate = activate;
         this.units = units;
+        this.hs=hs;
     }
 
     public ArrayList<int []> maxStandUnited(int n){
@@ -19,10 +22,8 @@ public class TFT {
 
         int counter=0;
         while(true) {
-            // Initialize trait count keeper with zeros
-            int [] ar = new int[activate.length];
-
             // Count total traits for the n-1 units
+            int [] ar = new int[activate.length];
             for (int j=0;j<n-1;j++) {
                 for(int i : units[pointers[j]].traits){
                     ar[i]++;
@@ -36,7 +37,7 @@ public class TFT {
             }
 
             // Recalculate #no active traits moving pointer of the nth unit
-            for (int i=pointers[n-1];i<units.length;i++) {
+            for(int i=pointers[n-1];i<units.length;i++) {
                 int result =activeTraits;
                 for(int j :units[i].traits){
                     if(ar[j] == activate[j]-1)
@@ -246,7 +247,7 @@ public class TFT {
         Unit Syndra = new Unit(syndra,"Syndra");
 
         int [] Thomas = {0,20};
-        Unit Kench = new Unit(Thomas,"Tahm Kench");
+        Unit Kench = new Unit(Thomas,"Tahm_Kench");
 
         int [] taric = {11,7};
         Unit Taric = new Unit(taric,"Taric");
@@ -282,23 +283,214 @@ public class TFT {
         Unit Zoe = new Unit(zoe,"Zoe");
 
         Unit [] units = {Ahri,Akali,Ashe,Bard,Blitzcrank,Briar,Camille,Cassiopeia,Diana,Elise,Ezreal,Fiora,Galio,Gwen,Hecarim,Hwei,Jax,Jayce,Jinx,Kalista,Karma,Kassadin,Katarina,KogMaw,Lilia,Milio,Mordekaiser,Morgana,Nami,Nasus,Neeko,Nilah,Nomsy,Norra,Nunu,Olaf,Poppy,Rakan,Rumble,Ryze,Seraphine,Shen,Shyvana,Smolder,Soraka,Swain,Syndra,Kench,Taric,Tristana,Twitch,Varus,Veigar,Vex,Warwick,Xerath,Ziggs,Zilean,Zoe};
+
         // Arcana Chrono Dragon Eldritch Faerie Frost Honeymancy Portal Pyro Sugarcraft Witchcraft Bastion Blaster Hunter Incantor Mage Multistriker Preserver Scholar Shapeshifter Vanguard Warrior
         int [] traits = {2,2,2,3,2,3,3,3,2,2,2,2,2,2,2,3,3,2,2,2,2,2};
-        TFT tft = new TFT(units,traits);
-        ArrayList<int []> solutions= tft.maxStandUnited(6);
+
+        HashSet<Integer> []traitUnits= new HashSet[22];
+
+        HashSet<Integer> Arcana= new HashSet<Integer>();
+        Arcana.add(0);
+        Arcana.add(4);
+        Arcana.add(47);
+        Arcana.add(56);
+        traitUnits[0]=Arcana;
+
+        HashSet<Integer> Chrono= new HashSet<Integer>();
+        Chrono.add(6);
+        Chrono.add(16);
+        Chrono.add(20);
+        Chrono.add(53);
+        Chrono.add(58);
+        traitUnits[1]=Chrono;
+
+        HashSet<Integer> Dragon= new HashSet<Integer>();
+        Dragon.add(32);
+        Dragon.add(42);
+        Dragon.add(43);
+        traitUnits[2]=Dragon;
+
+        HashSet<Integer> Eldritch= new HashSet<Integer>();
+        Eldritch.add(2);
+        Eldritch.add(5);
+        Eldritch.add(9);
+        Eldritch.add(26);
+        Eldritch.add(28);
+        Eldritch.add(31);
+        Eldritch.add(46);
+        traitUnits[3]=Eldritch;
+
+        HashSet<Integer> Faerie= new HashSet<Integer>();
+        Faerie.add(19);
+        Faerie.add(22);
+        Faerie.add(24);
+        Faerie.add(25);
+        Faerie.add(37);
+        Faerie.add(40);
+        Faerie.add(49);
+        traitUnits[4]=Faerie;
+
+        HashSet<Integer> Frost= new HashSet<Integer>();
+        Frost.add(8);
+        Frost.add(15);
+        Frost.add(35);
+        Frost.add(45);
+        Frost.add(50);
+        Frost.add(54);
+        Frost.add(58);
+        traitUnits[5]=Frost;
+
+        HashSet<Integer> Honeymancy= new HashSet<Integer>();
+        Honeymancy.add(4);
+        Honeymancy.add(23);
+        Honeymancy.add(34);
+        Honeymancy.add(52);
+        Honeymancy.add(57);
+        traitUnits[6]=Honeymancy;
+
+        HashSet<Integer> Portal= new HashSet<Integer>();
+        Portal.add(10);
+        Portal.add(12);
+        Portal.add(17);
+        Portal.add(21);
+        Portal.add(33);
+        Portal.add(39);
+        Portal.add(48);
+        Portal.add(59);
+        traitUnits[7]=Portal;
+
+        HashSet<Integer> Pyro= new HashSet<Integer>();
+        Pyro.add(1);
+        Pyro.add(29);
+        Pyro.add(41);
+        Pyro.add(42);
+        traitUnits[8]=Pyro;
+
+        HashSet<Integer> Sugarcraft= new HashSet<Integer>();
+        Sugarcraft.add(3);
+        Sugarcraft.add(13);
+        Sugarcraft.add(18);
+        Sugarcraft.add(38);
+        Sugarcraft.add(44);
+        traitUnits[9]=Sugarcraft;
+
+        HashSet<Integer> Witchcraft= new HashSet<Integer>();
+        Witchcraft.add(7);
+        Witchcraft.add(11);
+        Witchcraft.add(27);
+        Witchcraft.add(30);
+        Witchcraft.add(36);
+        Witchcraft.add(59);
+        traitUnits[10]=Witchcraft;
+
+        HashSet<Integer> Bastion= new HashSet<Integer>();
+        Bastion.add(8);
+        Bastion.add(14);
+        Bastion.add(24);
+        Bastion.add(34);
+        Bastion.add(36);
+        Bastion.add(41);
+        Bastion.add(48);
+        traitUnits[11]=Bastion;
+
+        HashSet<Integer> Blaster= new HashSet<Integer>();
+        Blaster.add(10);
+        Blaster.add(15);
+        Blaster.add(38);
+        Blaster.add(43);
+        Blaster.add(49);
+        Blaster.add(51);
+        traitUnits[12]=Blaster;
+
+        HashSet<Integer> Hunter= new HashSet<Integer>();
+        Hunter.add(18);
+        Hunter.add(23);
+        Hunter.add(32);
+        Hunter.add(35);
+        Hunter.add(50);
+        traitUnits[13]=Hunter;
+
+        HashSet<Integer> Incantor= new HashSet<Integer>();
+        Incantor.add(7);
+        Incantor.add(20);
+        Incantor.add(57);
+        Incantor.add(46);
+        traitUnits[14]=Incantor;
+
+        HashSet<Integer> Mage= new HashSet<Integer>();
+        Mage.add(12);
+        Mage.add(28);
+        Mage.add(33);
+        Mage.add(40);
+        Mage.add(44);
+        Mage.add(52);
+        Mage.add(53);
+        traitUnits[15]=Mage;
+
+        HashSet<Integer> Multistriker= new HashSet<Integer>();
+        Multistriker.add(1);
+        Multistriker.add(2);
+        Multistriker.add(6);
+        Multistriker.add(14);
+        Multistriker.add(16);
+        Multistriker.add(19);
+        Multistriker.add(21);
+        traitUnits[16]=Multistriker;
+
+        HashSet<Integer> Preserver= new HashSet<Integer>();
+        Preserver.add(3);
+        Preserver.add(27);
+        Preserver.add(37);
+        Preserver.add(58);
+        traitUnits[17]=Preserver;
+
+        HashSet<Integer> Scholar= new HashSet<Integer>();
+        Scholar.add(0);
+        Scholar.add(3);
+        Scholar.add(25);
+        Scholar.add(39);
+        Scholar.add(59);
+        traitUnits[18]=Scholar;
+
+        HashSet<Integer> Shapeshifter= new HashSet<Integer>();
+        Shapeshifter.add(5);
+        Shapeshifter.add(9);
+        Shapeshifter.add(17);
+        Shapeshifter.add(29);
+        Shapeshifter.add(30);
+        Shapeshifter.add(42);
+        Shapeshifter.add(45);
+        traitUnits[19]=Shapeshifter;
+
+        HashSet<Integer> Vanguard= new HashSet<Integer>();
+        Vanguard.add(4);
+        Vanguard.add(12);
+        Vanguard.add(26);
+        Vanguard.add(38);
+        Vanguard.add(47);
+        Vanguard.add(54);
+        traitUnits[20]=Vanguard;
+
+        HashSet<Integer> Warrior= new HashSet<Integer>();
+        Warrior.add(1);
+        Warrior.add(11);
+        Warrior.add(13);
+        Warrior.add(22);
+        Warrior.add(31);
+        traitUnits[21]=Warrior;
+
+        TFT tft = new TFT(units,traits,traitUnits);
+        ArrayList<int []> solutions= tft.maxStandUnited(8);
 
         if(solutions.isEmpty())
             System.out.println("No non-unique trait can be activated using that many units!");
-        else {
+        else
             for (int [] solution : solutions) {
-                for(int i: solution){
+                for (int i : solution)
                     System.out.print(units[i] + " ");
-                }
                 System.out.println();
             }
-        }
     }
-
 }
 class Unit{
     int [] traits;
