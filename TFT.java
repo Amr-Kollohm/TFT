@@ -28,6 +28,38 @@ public class TFT {
                     ar[i]++;
                 }
             }
+//            boolean flag = false;
+//            int position = 0;
+//            for (int j=0;j<n-1;j++) {
+//                for(int i : units[pointers[j]].traits){
+//                    if(ar[i] < activate[i]){
+//                        flag=true;
+//                    }
+//                    ar[i]++;
+//                }
+//                if(!flag){
+//                    position=j;
+//                    break;
+//                }
+//            }
+//            if(!flag && n!=1){
+//                counter =n-position+1;
+//                for(int i=n-1-counter;i>=0;i--){
+//                    if(pointers[i]==units.length-counter-1){
+//                        counter++;
+//                    }
+//                    else
+//                        break;
+//                }
+//                if(counter==n)
+//                    break;
+//                pointers[n-counter-1]= Math.min(pointers[n-counter-1]+1, units.length-1-counter);
+//
+//                for(int i=n-counter;i<n;i++){
+//                    pointers[i]=pointers[i-1]+1;
+//                }
+//                continue;
+//            }
             // Count the #no active traits from n-1 units
             int activeTraits = 0;
             int potentialTraits = 0;
@@ -37,6 +69,7 @@ public class TFT {
                 if(ar[i] == activate[i]-1)
                     potentialTraits++;
             }
+
 
             if(maxActiveTraits <= activeTraits + Math.min(3,potentialTraits)) { // 3 is the maximum number of traits any unit can have
 
